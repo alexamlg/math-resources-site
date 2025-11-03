@@ -1,7 +1,7 @@
 {
   "tests": [
     {
-      "name": "Valid admin login",
+      "name": "Step 1: Request 2FA code",
       "method": "POST",
       "body": {
         "username": "alexam",
@@ -9,8 +9,8 @@
       },
       "expectedStatus": 200,
       "expectedBody": {
-        "token": "string",
-        "username": "alexam"
+        "step": "code_sent",
+        "message": "string"
       },
       "bodyMatcher": "partial"
     },
