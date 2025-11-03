@@ -45,6 +45,10 @@ interface IndexProps {
 const Index = ({ initialCategory = 'Все' }: IndexProps) => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+
+  useEffect(() => {
+    setSelectedCategory(initialCategory);
+  }, [initialCategory]);
   const [searchQuery, setSearchQuery] = useState('');
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
