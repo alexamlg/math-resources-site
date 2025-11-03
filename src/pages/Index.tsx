@@ -38,9 +38,13 @@ const API_URL = 'https://functions.poehali.dev/4350c782-6bfa-4c53-b148-e1f621446
 
 const categories = ['Все', '5 класс', '6 класс', '7 класс', '8 класс', '9 класс', '10 класс', '11 класс', 'ОГЭ', 'ЕГЭ'];
 
-const Index = () => {
+interface IndexProps {
+  initialCategory?: string;
+}
+
+const Index = ({ initialCategory = 'Все' }: IndexProps) => {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState('Все');
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [searchQuery, setSearchQuery] = useState('');
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -527,16 +531,34 @@ const Index = () => {
         </div>
 
         <div className="mb-8 flex flex-wrap gap-2 justify-center">
-          {categories.map(category => (
-            <Button
-              key={category}
-              variant={selectedCategory === category ? 'default' : 'outline'}
-              onClick={() => setSelectedCategory(category)}
-              className="transition-all"
-            >
-              {category}
-            </Button>
-          ))}
+          {categories.map(category => {
+            const getCategoryUrl = (cat: string) => {
+              const urlMap: Record<string, string> = {
+                '5 класс': '/5-klass',
+                '6 класс': '/6-klass',
+                '7 класс': '/7-klass',
+                '8 класс': '/8-klass',
+                '9 класс': '/9-klass',
+                '10 класс': '/10-klass',
+                '11 класс': '/11-klass',
+                'ОГЭ': '/oge',
+                'ЕГЭ': '/ege',
+                'Все': '/'
+              };
+              return urlMap[cat] || '/';
+            };
+
+            return (
+              <Button
+                key={category}
+                variant={selectedCategory === category ? 'default' : 'outline'}
+                onClick={() => navigate(getCategoryUrl(category))}
+                className="transition-all"
+              >
+                {category}
+              </Button>
+            );
+          })}
         </div>
 
         {loading ? (

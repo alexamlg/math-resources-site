@@ -32,6 +32,15 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/5-klass" element={<Index initialCategory="5 класс" />} />
+            <Route path="/6-klass" element={<Index initialCategory="6 класс" />} />
+            <Route path="/7-klass" element={<Index initialCategory="7 класс" />} />
+            <Route path="/8-klass" element={<Index initialCategory="8 класс" />} />
+            <Route path="/9-klass" element={<Index initialCategory="9 класс" />} />
+            <Route path="/10-klass" element={<Index initialCategory="10 класс" />} />
+            <Route path="/11-klass" element={<Index initialCategory="11 класс" />} />
+            <Route path="/oge" element={<Index initialCategory="ОГЭ" />} />
+            <Route path="/ege" element={<Index initialCategory="ЕГЭ" />} />
             <Route path="/auth-9x2k7p" element={<Login />} />
             <Route path="/mng-7k4x2p9w" element={<Admin />} />
             <Route path="/my-purchases" element={<MyPurchases />} />
