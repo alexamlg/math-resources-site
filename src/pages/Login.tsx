@@ -32,7 +32,7 @@ const Login = () => {
         localStorage.setItem('auth_token', data.token);
         localStorage.setItem('username', data.username);
         toast.success('Вход выполнен');
-        navigate('/admin');
+        navigate('/mng-7k4x2p9w');
       } else {
         toast.error('Неверные данные');
       }

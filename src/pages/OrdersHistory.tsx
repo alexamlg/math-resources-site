@@ -33,7 +33,7 @@ const OrdersHistory = () => {
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
     if (!token) {
-      navigate('/login');
+      navigate('/auth-9x2k7p');
       return;
     }
     loadOrders();
@@ -100,7 +100,7 @@ const OrdersHistory = () => {
       <header className="border-b bg-white">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/admin')}>
+            <Button variant="ghost" size="icon" onClick={() => navigate('/mng-7k4x2p9w')}>
               <Icon name="ArrowLeft" size={20} />
             </Button>
             <div className="flex items-center gap-2">

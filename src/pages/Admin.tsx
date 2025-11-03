@@ -65,7 +65,7 @@ const Admin = () => {
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
     if (!token) {
-      navigate('/login');
+      navigate('/auth-9x2k7p');
       return;
     }
     loadProducts();
@@ -228,7 +228,7 @@ const Admin = () => {
   const handleLogout = () => {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('username');
-    navigate('/login');
+    navigate('/auth-9x2k7p');
     toast.info('Вы вышли из системы');
   };
 
