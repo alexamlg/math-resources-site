@@ -72,9 +72,10 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     conn = psycopg2.connect(database_url)
     cur = conn.cursor()
     
-    placeholders = ','.join(['%s'] * len(product_ids))
-    query = f'SELECT id, title, price FROM t_p99209851_math_resources_site.products WHERE id IN ({placeholders})'
-    cur.execute(query, product_ids)
+    # Используем Simple Query Protocol - вставляем значения напрямую в запрос
+    ids_str = ','.join(str(int(pid)) for pid in product_ids)
+    query = f"SELECT id, title, price FROM t_p99209851_math_resources_site.products WHERE id IN ({ids_str})"
+    cur.execute(query)
     products = cur.fetchall()
     
     cur.close()
