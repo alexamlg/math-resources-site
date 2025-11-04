@@ -84,6 +84,18 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
 
     loadProducts();
     loadStats();
+    
+    // Загружаем корзину из localStorage при загрузке страницы
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      try {
+        const cartItems = JSON.parse(savedCart);
+        setCart(cartItems);
+      } catch (error) {
+        console.error('Ошибка загрузки корзины:', error);
+      }
+    }
+    
     const token = localStorage.getItem('user_token');
     const email = localStorage.getItem('user_email');
     if (token && email) {
@@ -177,12 +189,16 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
       toast.info('Товар уже в корзине');
       return;
     }
-    setCart(prev => [...prev, { ...product, quantity: 1 }]);
+    const newCart = [...cart, { ...product, quantity: 1 }];
+    setCart(newCart);
+    localStorage.setItem('cart', JSON.stringify(newCart));
     toast.success(`${product.title} добавлен в корзину`);
   };
 
   const removeFromCart = (id: number) => {
-    setCart(prev => prev.filter(item => item.id !== id));
+    const newCart = cart.filter(item => item.id !== id);
+    setCart(newCart);
+    localStorage.setItem('cart', JSON.stringify(newCart));
     toast.info('Товар удалён из корзины');
   };
 
