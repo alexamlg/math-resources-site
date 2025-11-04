@@ -655,7 +655,141 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
             <p className="text-muted-foreground">Загрузка...</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <>
+            {/* Блок новинок */}
+            {products.length > 0 && (
+              <section className="mb-12">
+                <h3 className="text-2xl font-bold mb-6 text-center">
+                  <span className="text-[#FF6B6B]">Новинка</span>
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {products.slice(0, 3).map(product => (
+                    <Card key={product.id} className="hover:shadow-lg transition-shadow flex flex-col">
+                      <div className="absolute top-4 right-4 z-10">
+                        <Badge className="bg-[#FF6B6B] text-white border-0">Новинка</Badge>
+                      </div>
+                      {product.preview_image_url && (
+                        <div className="w-full aspect-[3/4] overflow-hidden rounded-t-lg cursor-pointer" onClick={() => navigate(`/product/${product.id}`)}>
+                          <img 
+                            src={product.preview_image_url} 
+                            alt={product.title} 
+                            className="w-full h-full object-contain bg-white hover:scale-105 transition-transform"
+                          />
+                        </div>
+                      )}
+                      <CardHeader className="cursor-pointer" onClick={() => navigate(`/product/${product.id}`)}>
+                        <div className="flex justify-between items-start mb-2">
+                          <Badge variant="secondary">{product.category}</Badge>
+                          <Badge variant="outline">{product.type}</Badge>
+                        </div>
+                        <CardTitle className="text-lg hover:text-primary transition-colors">{product.title}</CardTitle>
+                        <CardDescription className="text-sm leading-relaxed">
+                          {product.description.split('\n').map((line, i) => (
+                            <div key={i} className={line.trim() ? "mb-1" : "mb-2"}>{line || '\u00A0'}</div>
+                          ))}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-2 flex-grow">
+                        {product.sample_pdf_url && product.sample_pdf_url.trim() !== '' && (
+                          <a
+                            href={product.sample_pdf_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-sm text-primary hover:underline"
+                          >
+                            <Icon name="FileText" size={16} />
+                            Скачать бесплатный образец (PDF)
+                          </a>
+                        )}
+                        {(product.trainer1_url || product.trainer2_url || product.trainer3_url) && (
+                          <div className="space-y-1.5 pt-2">
+                            {product.trainer1_url && product.trainer1_url.trim() !== '' && (
+                              <a
+                                href={product.trainer1_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 text-sm text-primary hover:underline"
+                              >
+                                <Icon name="Download" size={14} />
+                                Тренажёр №1
+                              </a>
+                            )}
+                            {product.trainer2_url && product.trainer2_url.trim() !== '' && (
+                              <a
+                                href={product.trainer2_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 text-sm text-primary hover:underline"
+                              >
+                                <Icon name="Download" size={14} />
+                                Тренажёр №2
+                              </a>
+                            )}
+                            {product.trainer3_url && product.trainer3_url.trim() !== '' && (
+                              <a
+                                href={product.trainer3_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 text-sm text-primary hover:underline"
+                              >
+                                <Icon name="Download" size={14} />
+                                Тренажёр №3
+                              </a>
+                            )}
+                          </div>
+                        )}
+                      </CardContent>
+                      <CardFooter className="flex justify-between items-center mt-auto">
+                        {product.is_free ? (
+                          <p className="text-2xl font-bold text-gray-600">Бесплатно</p>
+                        ) : (
+                          <p className="text-2xl font-bold">{product.price} ₽</p>
+                        )}
+                        {!product.is_free && (() => {
+                          const isPurchased = purchasedProductIds.includes(product.id);
+                          const isInCart = cart.find(item => item.id === product.id);
+                          
+                          if (isPurchased) {
+                            return (
+                              <Button
+                                className="bg-green-50 text-green-700 border border-green-200 hover:bg-green-50 cursor-default"
+                                disabled
+                              >
+                                <Icon name="CheckCircle2" size={18} className="mr-2" />
+                                Оплачен
+                              </Button>
+                            );
+                          }
+                          
+                          if (isInCart) {
+                            return (
+                              <Button
+                                className="bg-gray-100 text-gray-600 border border-gray-300 hover:bg-gray-100 cursor-default"
+                                disabled
+                              >
+                                <Icon name="ShoppingCart" size={18} className="mr-2" />
+                                В корзине
+                              </Button>
+                            );
+                          }
+                          
+                          return (
+                            <Button onClick={() => addToCart(product)}>
+                              <Icon name="ShoppingCart" size={18} className="mr-2" />
+                              В корзину
+                            </Button>
+                          );
+                        })()}
+                        {product.is_free && <div />}
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Весь каталог */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.map(product => (
             <Card key={product.id} className="hover:shadow-lg transition-shadow flex flex-col">
               {product.preview_image_url && (
@@ -775,6 +909,7 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
             </Card>
           ))}
           </div>
+          </>
         )}
       </main>
 
