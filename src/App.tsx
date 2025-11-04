@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import MyPurchases from "./pages/MyPurchases";
 import AdminDeliver from "./pages/AdminDeliver";
 import OrdersHistory from "./pages/OrdersHistory";
+import UsersList from "./pages/UsersList";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Privacy from "./pages/Privacy";
@@ -46,6 +47,7 @@ const App = () => (
             <Route path="/my-purchases" element={<MyPurchases />} />
             <Route path="/admin-deliver" element={<AdminDeliver />} />
             <Route path="/orders-history" element={<OrdersHistory />} />
+            <Route path="/users-list" element={<UsersList />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/privacy" element={<Privacy />} />

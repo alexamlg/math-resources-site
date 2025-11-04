@@ -1,0 +1,15 @@
+{
+  "tests": [
+
+    {
+      "name": "Reject request without admin token",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 401,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

@@ -273,6 +273,10 @@ const Admin = () => {
               <Icon name="Receipt" size={18} className="mr-2" />
               История заказов
             </Button>
+            <Button variant="outline" onClick={() => navigate('/users-list')}>
+              <Icon name="Users" size={18} className="mr-2" />
+              Пользователи
+            </Button>
             <Button variant="ghost" onClick={handleLogout}>
               <Icon name="LogOut" size={18} className="mr-2" />
               Выйти
