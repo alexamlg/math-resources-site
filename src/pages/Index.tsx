@@ -105,7 +105,10 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
       if (savedCart) {
         const cartItems = JSON.parse(savedCart);
         setCart(cartItems);
-        setIsCheckoutOpen(true);
+        // Небольшая задержка для корректного открытия модального окна
+        setTimeout(() => {
+          setIsCheckoutOpen(true);
+        }, 300);
       }
       // Очищаем параметр из URL
       window.history.replaceState({}, '', window.location.pathname);
