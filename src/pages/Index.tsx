@@ -250,7 +250,10 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
       console.error('Payment API response:', { status: response.status, data });
       
       if (!response.ok) {
-        toast.error(data.error || 'Ошибка создания платежа');
+        const errorMsg = data.error || 'Ошибка создания платежа';
+        const details = data.details ? ` | ${JSON.stringify(data.details)}` : '';
+        toast.error(errorMsg + details, { duration: 10000 });
+        alert(`Ошибка оплаты:\n\nСтатус: ${response.status}\nОшибка: ${errorMsg}${details}\n\nПопробуйте снова или свяжитесь с поддержкой`);
         console.error('Payment failed:', data);
         return;
       }
@@ -261,8 +264,10 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
       } else {
         toast.error('Ошибка создания платежа');
       }
-    } catch (error) {
-      toast.error('Ошибка при оплате');
+    } catch (error: any) {
+      const errorMsg = error?.message || String(error);
+      toast.error('Ошибка при оплате: ' + errorMsg, { duration: 10000 });
+      alert(`Ошибка при оплате:\n\n${errorMsg}\n\nПопробуйте снова или свяжитесь с поддержкой`);
     } finally {
       setCheckoutLoading(false);
       setTimeout(() => setIsProcessingPayment(false), 1000);
@@ -380,7 +385,10 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
       console.error('Payment API response:', { status: response.status, data });
       
       if (!response.ok) {
-        toast.error(data.error || 'Ошибка создания платежа');
+        const errorMsg = data.error || 'Ошибка создания платежа';
+        const details = data.details ? ` | ${JSON.stringify(data.details)}` : '';
+        toast.error(errorMsg + details, { duration: 10000 });
+        alert(`Ошибка оплаты:\n\nСтатус: ${response.status}\nОшибка: ${errorMsg}${details}\n\nПопробуйте снова или свяжитесь с поддержкой`);
         console.error('Payment failed:', data);
         return;
       }
@@ -391,8 +399,10 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
       } else {
         toast.error('Ошибка создания платежа');
       }
-    } catch (error) {
-      toast.error('Ошибка при оплате');
+    } catch (error: any) {
+      const errorMsg = error?.message || String(error);
+      toast.error('Ошибка при оплате: ' + errorMsg, { duration: 10000 });
+      alert(`Ошибка при оплате:\n\n${errorMsg}\n\nПопробуйте снова или свяжитесь с поддержкой`);
     } finally {
       setCheckoutLoading(false);
       setTimeout(() => setIsProcessingPayment(false), 1000);
