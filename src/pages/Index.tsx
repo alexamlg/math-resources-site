@@ -27,6 +27,7 @@ interface Product {
   trainer2_url?: string;
   trainer3_url?: string;
   is_free?: boolean;
+  is_new?: boolean;
   preview_image_url?: string;
 }
 
@@ -657,13 +658,13 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
         ) : (
           <>
             {/* Блок новинок */}
-            {products.length > 0 && (
+            {products.filter(p => p.is_new).length > 0 && (
               <section className="mb-12">
                 <h3 className="text-2xl font-bold mb-6 text-center">
                   <span className="text-[#FF6B6B]">Новинка</span>
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {products.slice(0, 3).map(product => (
+                  {products.filter(p => p.is_new).slice(0, 3).map(product => (
                     <Card key={product.id} className="hover:shadow-lg transition-shadow flex flex-col">
                       <div className="absolute top-4 right-4 z-10">
                         <Badge className="bg-[#FF6B6B] text-white border-0">Новинка</Badge>

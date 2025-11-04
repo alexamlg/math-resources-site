@@ -27,6 +27,7 @@ interface Product {
   trainer2_url?: string;
   trainer3_url?: string;
   is_free?: boolean;
+  is_new?: boolean;
   preview_image_url?: string;
 }
 
@@ -59,6 +60,7 @@ const Admin = () => {
     trainer2_url: '',
     trainer3_url: '',
     is_free: false,
+    is_new: false,
     preview_image_url: ''
   });
 
@@ -165,6 +167,7 @@ const Admin = () => {
       trainer2_url: product.trainer2_url || '',
       trainer3_url: product.trainer3_url || '',
       is_free: product.is_free || false,
+      is_new: product.is_new || false,
       preview_image_url: product.preview_image_url || ''
     });
     setIsDialogOpen(true);
@@ -185,6 +188,7 @@ const Admin = () => {
       trainer2_url: '',
       trainer3_url: '',
       is_free: false,
+      is_new: false,
       preview_image_url: ''
     });
   };
@@ -328,6 +332,17 @@ const Admin = () => {
                       />
                       <Label htmlFor="is_free" className="cursor-pointer font-medium">
                         Бесплатный материал
+                      </Label>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2 mb-3">
+                      <Checkbox
+                        id="is_new"
+                        checked={formData.is_new}
+                        onCheckedChange={(checked) => setFormData({ ...formData, is_new: !!checked })}
+                      />
+                      <Label htmlFor="is_new" className="cursor-pointer font-medium">
+                        Новинка
                       </Label>
                     </div>
                     
