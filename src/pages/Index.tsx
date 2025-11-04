@@ -182,7 +182,15 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
 
   const filteredProducts = products
     .filter(p => selectedCategory === 'Все' || p.category === selectedCategory)
-    .filter(p => searchQuery === '' || p.title.toLowerCase().includes(searchQuery.toLowerCase()));
+    .filter(p => searchQuery === '' || p.title.toLowerCase().includes(searchQuery.toLowerCase()))
+    .sort((a, b) => {
+      // В категории "Все" новые файлы показываем первыми
+      if (selectedCategory === 'Все') {
+        if (a.is_new && !b.is_new) return -1;
+        if (!a.is_new && b.is_new) return 1;
+      }
+      return 0;
+    });
 
   const addToCart = (product: Product) => {
     const existing = cart.find(item => item.id === product.id);
