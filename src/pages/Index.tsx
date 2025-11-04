@@ -106,37 +106,32 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
     };
   }, []);
 
-  // Отдельный useEffect для обработки параметра checkout
+  // Проверяем флаг для автоматического открытия окна оплаты
   useEffect(() => {
-    const checkoutParam = searchParams.get('checkout');
-    console.log('Проверка параметра checkout:', checkoutParam);
+    const openCheckoutFlag = localStorage.getItem('openCheckout');
     
-    if (checkoutParam === 'true') {
-      console.log('Обнаружен параметр checkout=true');
+    if (openCheckoutFlag === 'true') {
       // Загружаем корзину из localStorage
       const savedCart = localStorage.getItem('cart');
-      console.log('Корзина из localStorage:', savedCart);
       
       if (savedCart) {
         try {
           const cartItems = JSON.parse(savedCart);
-          console.log('Загружено товаров в корзину:', cartItems.length);
           setCart(cartItems);
           
-          // Небольшая задержка для корректного открытия модального окна
+          // Открываем окно оплаты через небольшую задержку
           setTimeout(() => {
-            console.log('Открываем окно оплаты');
             setIsCheckoutOpen(true);
-          }, 500);
+          }, 100);
         } catch (error) {
-          console.error('Ошибка парсинга корзины:', error);
+          console.error('Ошибка загрузки корзины:', error);
         }
       }
       
-      // Очищаем параметр из URL
-      setSearchParams({});
+      // Убираем флаг
+      localStorage.removeItem('openCheckout');
     }
-  }, [searchParams, setSearchParams]);
+  }, []);
 
   const loadProducts = async () => {
     try {
