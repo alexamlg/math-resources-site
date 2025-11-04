@@ -99,11 +99,13 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     discount_amount = int(subtotal * discount_percent / 100) if has_discount else 0
     total_amount = subtotal - discount_amount
     
-    # Формируем описание заказа
+    # Формируем описание заказа (ЮКасса требует макс 128 символов, только латиница/кириллица/цифры/пробелы/знаки препинания)
     product_titles = [title for _, title, _ in products]
-    description = ', '.join(product_titles[:3])
-    if len(product_titles) > 3:
-        description += f' и ещё {len(product_titles) - 3} товар(ов)'
+    description = f'Заказ {len(product_titles)} товаров'
+    if len(product_titles) == 1:
+        # Очищаем название от спецсимволов для ЮКассы
+        clean_title = ''.join(c for c in product_titles[0] if c.isalnum() or c in ' .,!?-–—()')[:100]
+        description = clean_title if clean_title else 'Заказ 1 товар'
     
     # Получаем ЮКасса credentials
     shop_id = os.environ.get('YOOKASSA_SHOP_ID')
@@ -139,7 +141,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 'email': customer_email
             },
             'items': [{
-                'description': title,
+                'description': ''.join(c for c in title if c.isalnum() or c in ' .,!?-–—()')[:128] or 'Товар',
                 'quantity': '1',
                 'amount': {
                     'value': f'{float(price):.2f}',
