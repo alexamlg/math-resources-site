@@ -247,6 +247,13 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
       });
       
       const data = await response.json();
+      console.error('Payment API response:', { status: response.status, data });
+      
+      if (!response.ok) {
+        toast.error(data.error || 'Ошибка создания платежа');
+        console.error('Payment failed:', data);
+        return;
+      }
       
       if (data.payment_url) {
         localStorage.setItem('pending_order', JSON.stringify({ cart, email: guestEmail }));
@@ -312,6 +319,13 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
         });
         
         const data = await response.json();
+        console.error('Payment API response:', { status: response.status, data });
+        
+        if (!response.ok) {
+          toast.error(data.error || 'Ошибка создания платежа');
+          console.error('Payment failed:', data);
+          return;
+        }
         
         if (data.payment_url) {
           localStorage.setItem('pending_order', JSON.stringify({ cart, user_id: authData.user_id }));
@@ -363,6 +377,13 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
       });
       
       const data = await response.json();
+      console.error('Payment API response:', { status: response.status, data });
+      
+      if (!response.ok) {
+        toast.error(data.error || 'Ошибка создания платежа');
+        console.error('Payment failed:', data);
+        return;
+      }
       
       if (data.payment_url) {
         localStorage.setItem('pending_order', JSON.stringify({ cart, email: currentUserEmail }));
