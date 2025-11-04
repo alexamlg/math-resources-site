@@ -100,13 +100,17 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
     // Проверяем URL параметр checkout=true
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('checkout') === 'true') {
+      console.log('Обнаружен параметр checkout=true');
       // Загружаем корзину из localStorage
       const savedCart = localStorage.getItem('cart');
+      console.log('Корзина из localStorage:', savedCart);
       if (savedCart) {
         const cartItems = JSON.parse(savedCart);
+        console.log('Загружено товаров в корзину:', cartItems.length);
         setCart(cartItems);
         // Небольшая задержка для корректного открытия модального окна
         setTimeout(() => {
+          console.log('Открываем окно оплаты');
           setIsCheckoutOpen(true);
         }, 300);
       }
