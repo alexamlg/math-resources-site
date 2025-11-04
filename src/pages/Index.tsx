@@ -109,20 +109,25 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
   // Проверяем флаг для автоматического открытия окна оплаты
   useEffect(() => {
     const openCheckoutFlag = localStorage.getItem('openCheckout');
+    console.log('Проверка флага openCheckout:', openCheckoutFlag);
     
     if (openCheckoutFlag === 'true') {
+      console.log('Флаг openCheckout обнаружен!');
       // Загружаем корзину из localStorage
       const savedCart = localStorage.getItem('cart');
+      console.log('Корзина из localStorage:', savedCart);
       
       if (savedCart) {
         try {
           const cartItems = JSON.parse(savedCart);
+          console.log('Товаров в корзине:', cartItems.length);
           setCart(cartItems);
           
           // Открываем окно оплаты через небольшую задержку
           setTimeout(() => {
+            console.log('Открываем окно оплаты!');
             setIsCheckoutOpen(true);
-          }, 100);
+          }, 300);
         } catch (error) {
           console.error('Ошибка загрузки корзины:', error);
         }

@@ -96,17 +96,22 @@ const Product = () => {
   const handleBuyNow = () => {
     if (!product) return;
     
+    console.log('Кнопка "Купить сейчас" нажата для товара:', product.title);
     const currentCart = JSON.parse(localStorage.getItem('cart') || '[]');
     const existing = currentCart.find((item: any) => item.id === product.id);
     
     if (!existing) {
       currentCart.push({ ...product, quantity: 1 });
       localStorage.setItem('cart', JSON.stringify(currentCart));
+      console.log('Товар добавлен в корзину localStorage:', currentCart);
+    } else {
+      console.log('Товар уже в корзине');
     }
     
     // Устанавливаем флаг для автоматического открытия окна оплаты
     localStorage.setItem('openCheckout', 'true');
     
+    console.log('Переход на главную');
     navigate('/');
   };
 
