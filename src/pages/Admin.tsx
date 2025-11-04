@@ -342,7 +342,7 @@ const Admin = () => {
                         onCheckedChange={(checked) => setFormData({ ...formData, is_new: !!checked })}
                       />
                       <Label htmlFor="is_new" className="cursor-pointer font-medium">
-                        Новинка
+                        Новый файл
                       </Label>
                     </div>
                     
