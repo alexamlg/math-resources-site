@@ -390,37 +390,49 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
       </div>
       
       <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
-        <div className="container flex h-16 items-center justify-between">
+        <div className="container flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2">
             <Icon name="GraduationCap" size={28} className="text-primary" />
-            <h1 className="text-2xl font-bold text-foreground">Математическая кухня</h1>
+            <h1 className="text-lg sm:text-2xl font-bold text-foreground">Математическая кухня</h1>
           </div>
 
           <div className="flex items-center gap-2">
             {isLoggedIn ? (
-              <Button variant="ghost" size="sm" onClick={() => navigate('/my-purchases')}>
+              <Button variant="ghost" size="sm" onClick={() => navigate('/my-purchases')} className="hidden sm:flex">
                 <Icon name="User" size={18} className="mr-2" />
                 Личный кабинет
               </Button>
             ) : (
               <>
-                <Button variant="ghost" size="sm" onClick={() => navigate('/forgot-password')}>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/forgot-password')} className="hidden md:flex">
                   <Icon name="KeyRound" size={18} className="mr-2" />
                   Восстановить пароль
                 </Button>
-                <Button variant="default" size="sm" onClick={() => setIsAuthDialogOpen(true)}>
+                <Button variant="default" size="sm" onClick={() => setIsAuthDialogOpen(true)} className="hidden sm:flex">
                   <Icon name="LogIn" size={18} className="mr-2" />
                   Войти
                 </Button>
               </>
             )}
+            
+            {/* Мобильная версия кнопок входа */}
+            {!isLoggedIn && (
+              <Button variant="ghost" size="icon" onClick={() => setIsAuthDialogOpen(true)} className="sm:hidden">
+                <Icon name="LogIn" size={20} />
+              </Button>
+            )}
+            {isLoggedIn && (
+              <Button variant="ghost" size="icon" onClick={() => navigate('/my-purchases')} className="sm:hidden">
+                <Icon name="User" size={20} />
+              </Button>
+            )}
           
             <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="relative">
+              <Button variant="outline" size="icon" className="relative ml-1">
                 <Icon name="ShoppingCart" size={20} />
                 {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-xs text-white flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-xs text-white flex items-center justify-center font-bold">
                     {totalItems}
                   </span>
                 )}
