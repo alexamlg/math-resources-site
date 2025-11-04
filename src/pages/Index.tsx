@@ -97,6 +97,20 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
 
     window.addEventListener('scroll', handleScroll);
 
+    // Проверяем URL параметр checkout=true
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('checkout') === 'true') {
+      // Загружаем корзину из localStorage
+      const savedCart = localStorage.getItem('cart');
+      if (savedCart) {
+        const cartItems = JSON.parse(savedCart);
+        setCart(cartItems);
+        setIsCheckoutOpen(true);
+      }
+      // Очищаем параметр из URL
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+
     return () => {
       // Cleanup meta tag on unmount
       const existingMeta = document.querySelector('meta[name="yandex-verification"]');
