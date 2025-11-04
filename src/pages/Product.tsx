@@ -210,20 +210,15 @@ const Product = () => {
                     <Button
                       className="w-full bg-purple-600 hover:bg-purple-700"
                       size="lg"
-                      onClick={handleBuyNow}
-                    >
-                      <Icon name="ShoppingCart" className="mr-2 h-5 w-5" />
-                      Купить сейчас
-                    </Button>
-                    
-                    <Button
-                      variant="outline"
-                      className="w-full"
-                      size="lg"
                       onClick={addToCart}
                     >
+                      <Icon name="ShoppingCart" className="mr-2 h-5 w-5" />
                       Добавить в корзину
                     </Button>
+                    
+                    <p className="text-sm text-gray-600 text-center">
+                      Добавьте нужные товары в корзину, затем оформите заказ
+                    </p>
                   </div>
                 )}
               </div>
