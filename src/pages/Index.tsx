@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -44,6 +44,7 @@ interface IndexProps {
 
 const Index = ({ initialCategory = 'Все' }: IndexProps) => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 
   useEffect(() => {
@@ -97,27 +98,6 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
 
     window.addEventListener('scroll', handleScroll);
 
-    // Проверяем URL параметр checkout=true
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('checkout') === 'true') {
-      console.log('Обнаружен параметр checkout=true');
-      // Загружаем корзину из localStorage
-      const savedCart = localStorage.getItem('cart');
-      console.log('Корзина из localStorage:', savedCart);
-      if (savedCart) {
-        const cartItems = JSON.parse(savedCart);
-        console.log('Загружено товаров в корзину:', cartItems.length);
-        setCart(cartItems);
-        // Небольшая задержка для корректного открытия модального окна
-        setTimeout(() => {
-          console.log('Открываем окно оплаты');
-          setIsCheckoutOpen(true);
-        }, 300);
-      }
-      // Очищаем параметр из URL
-      window.history.replaceState({}, '', window.location.pathname);
-    }
-
     return () => {
       // Cleanup meta tag on unmount
       const existingMeta = document.querySelector('meta[name="yandex-verification"]');
@@ -125,6 +105,38 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  // Отдельный useEffect для обработки параметра checkout
+  useEffect(() => {
+    const checkoutParam = searchParams.get('checkout');
+    console.log('Проверка параметра checkout:', checkoutParam);
+    
+    if (checkoutParam === 'true') {
+      console.log('Обнаружен параметр checkout=true');
+      // Загружаем корзину из localStorage
+      const savedCart = localStorage.getItem('cart');
+      console.log('Корзина из localStorage:', savedCart);
+      
+      if (savedCart) {
+        try {
+          const cartItems = JSON.parse(savedCart);
+          console.log('Загружено товаров в корзину:', cartItems.length);
+          setCart(cartItems);
+          
+          // Небольшая задержка для корректного открытия модального окна
+          setTimeout(() => {
+            console.log('Открываем окно оплаты');
+            setIsCheckoutOpen(true);
+          }, 500);
+        } catch (error) {
+          console.error('Ошибка парсинга корзины:', error);
+        }
+      }
+      
+      // Очищаем параметр из URL
+      setSearchParams({});
+    }
+  }, [searchParams, setSearchParams]);
 
   const loadProducts = async () => {
     try {
