@@ -28,6 +28,7 @@ interface Product {
   trainer3_url?: string;
   is_free?: boolean;
   is_new?: boolean;
+  is_popular?: boolean;
   preview_image_url?: string;
 }
 
@@ -61,6 +62,7 @@ const Admin = () => {
     trainer3_url: '',
     is_free: false,
     is_new: false,
+    is_popular: false,
     preview_image_url: ''
   });
 
@@ -168,6 +170,7 @@ const Admin = () => {
       trainer3_url: product.trainer3_url || '',
       is_free: product.is_free || false,
       is_new: product.is_new || false,
+      is_popular: product.is_popular || false,
       preview_image_url: product.preview_image_url || ''
     });
     setIsDialogOpen(true);
@@ -189,6 +192,7 @@ const Admin = () => {
       trainer3_url: '',
       is_free: false,
       is_new: false,
+      is_popular: false,
       preview_image_url: ''
     });
   };
@@ -347,6 +351,17 @@ const Admin = () => {
                       />
                       <Label htmlFor="is_new" className="cursor-pointer font-medium">
                         Новый файл
+                      </Label>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2 mb-3">
+                      <Checkbox
+                        id="is_popular"
+                        checked={formData.is_popular}
+                        onCheckedChange={(checked) => setFormData({ ...formData, is_popular: !!checked })}
+                      />
+                      <Label htmlFor="is_popular" className="cursor-pointer font-medium">
+                        Популярный файл
                       </Label>
                     </div>
                     

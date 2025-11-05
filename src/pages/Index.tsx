@@ -28,6 +28,7 @@ interface Product {
   trainer3_url?: string;
   is_free?: boolean;
   is_new?: boolean;
+  is_popular?: boolean;
   preview_image_url?: string;
 }
 
@@ -667,11 +668,14 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.map(product => (
             <Card key={product.id} className="hover:shadow-lg transition-shadow flex flex-col relative">
-              {product.is_new && (
-                <div className="absolute top-4 right-4 z-10">
+              <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
+                {product.is_new && (
                   <Badge className="bg-[#FF6B6B] text-white border-0">Новый файл</Badge>
-                </div>
-              )}
+                )}
+                {product.is_popular && (
+                  <Badge className="bg-[#FFB800] text-white border-0">Популярный файл</Badge>
+                )}
+              </div>
               {product.preview_image_url && (
                 <div className="w-full aspect-[3/4] overflow-hidden rounded-t-lg cursor-pointer" onClick={() => navigate(`/product/${product.id}`)}>
                   <img 
