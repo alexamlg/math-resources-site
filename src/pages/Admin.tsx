@@ -67,11 +67,6 @@ const Admin = () => {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem('auth_token');
-    if (!token) {
-      navigate('/auth-9x2k7p');
-      return;
-    }
     loadProducts();
     loadStats();
   }, []);
@@ -107,12 +102,10 @@ const Admin = () => {
         ...(editingProduct && { id: editingProduct.id })
       };
 
-      const token = localStorage.getItem('auth_token');
       const response = await fetch(API_URL, {
         method: editingProduct ? 'PUT' : 'POST',
         headers: { 
-          'Content-Type': 'application/json',
-          'X-Admin-Token': token || ''
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       });
@@ -137,12 +130,10 @@ const Admin = () => {
     if (!confirm('Удалить товар?')) return;
 
     try {
-      const token = localStorage.getItem('auth_token');
       await fetch(API_URL, {
         method: 'DELETE',
         headers: { 
-          'Content-Type': 'application/json',
-          'X-Admin-Token': token || ''
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({ id })
       });
@@ -234,10 +225,8 @@ const Admin = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('username');
-    navigate('/auth-9x2k7p');
-    toast.info('Вы вышли из системы');
+    navigate('/');
+    toast.info('Вы вышли из админки');
   };
 
   return (
