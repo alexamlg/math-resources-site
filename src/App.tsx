@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import Index from "./pages/Index";
 import Admin from "./pages/Admin";
-import Login from "./pages/Login";
+
 import MyPurchases from "./pages/MyPurchases";
 import AdminDeliver from "./pages/AdminDeliver";
 import OrdersHistory from "./pages/OrdersHistory";
@@ -42,8 +42,7 @@ const App = () => (
             <Route path="/11-klass" element={<Index initialCategory="11 класс" />} />
             <Route path="/oge" element={<Index initialCategory="ОГЭ" />} />
             <Route path="/ege" element={<Index initialCategory="ЕГЭ" />} />
-            <Route path="/auth-9x2k7p" element={<Login />} />
-            <Route path="/mng-7k4x2p9w" element={<Admin />} />
+            <Route path="/admin-x9p2k7" element={<Admin />} />
             <Route path="/my-purchases" element={<MyPurchases />} />
             <Route path="/admin-deliver" element={<AdminDeliver />} />
             <Route path="/orders-history" element={<OrdersHistory />} />
