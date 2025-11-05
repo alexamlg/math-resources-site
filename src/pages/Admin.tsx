@@ -67,6 +67,11 @@ const Admin = () => {
   });
 
   useEffect(() => {
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+      navigate('/admin-login-x9p2k7');
+      return;
+    }
     loadProducts();
     loadStats();
   }, []);
@@ -225,8 +230,10 @@ const Admin = () => {
   };
 
   const handleLogout = () => {
-    navigate('/');
-    toast.info('Вы вышли из админки');
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('username');
+    navigate('/admin-login-x9p2k7');
+    toast.info('Вы вышли из системы');
   };
 
   return (

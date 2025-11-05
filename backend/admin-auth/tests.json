@@ -1,0 +1,13 @@
+{
+  "tests": [
+    {
+      "name": "Test invalid credentials",
+      "method": "POST",
+      "body": {
+        "username": "wronguser",
+        "password": "wrongpass"
+      },
+      "expectedStatus": 401
+    }
+  ]
+}
