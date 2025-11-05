@@ -185,8 +185,10 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
     .filter(p => selectedCategory === 'Все' || p.category === selectedCategory)
     .filter(p => searchQuery === '' || p.title.toLowerCase().includes(searchQuery.toLowerCase()))
     .sort((a, b) => {
-      // В категории "Все" новые файлы показываем первыми
+      // В категории "Все" популярные и новые файлы показываем первыми
       if (selectedCategory === 'Все') {
+        if (a.is_popular && !b.is_popular) return -1;
+        if (!a.is_popular && b.is_popular) return 1;
         if (a.is_new && !b.is_new) return -1;
         if (!a.is_new && b.is_new) return 1;
       }
@@ -673,7 +675,7 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
                   <Badge className="bg-[#FF6B6B] text-white border-0">Новый файл</Badge>
                 )}
                 {product.is_popular && (
-                  <Badge className="bg-[#FFB800] text-white border-0">Популярный файл</Badge>
+                  <Badge className="bg-[#10B981] text-white border-0">Популярный файл</Badge>
                 )}
               </div>
               {product.preview_image_url && (
