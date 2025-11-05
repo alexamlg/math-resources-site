@@ -451,7 +451,7 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
                   <Icon name="KeyRound" size={18} className="mr-2" />
                   Восстановить пароль
                 </Button>
-                <Button variant="default" size="sm" onClick={() => setIsAuthDialogOpen(true)} className="hidden sm:flex">
+                <Button variant="default" size="sm" onClick={() => navigate('/auth-9x2k7p')} className="hidden sm:flex">
                   <Icon name="LogIn" size={18} className="mr-2" />
                   Войти
                 </Button>
@@ -460,7 +460,7 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
             
             {/* Мобильная версия кнопок входа */}
             {!isLoggedIn && (
-              <Button variant="ghost" size="icon" onClick={() => setIsAuthDialogOpen(true)} className="sm:hidden">
+              <Button variant="ghost" size="icon" onClick={() => navigate('/auth-9x2k7p')} className="sm:hidden">
                 <Icon name="LogIn" size={20} />
               </Button>
             )}
