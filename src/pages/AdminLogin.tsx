@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import Icon from '@/components/ui/icon';
 import SEO from '@/components/SEO';
 
-const API_URL = 'https://functions.poehali.dev/4350c782-6bfa-4c53-b148-e1f621446eaa/admin-auth';
+const API_URL = 'https://functions.poehali.dev/19bf4793-d457-445e-9840-1849efe694c7';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
