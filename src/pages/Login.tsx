@@ -17,8 +17,10 @@ const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    full_name: ''
+    full_name: '',
+    phone: ''
   });
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +34,8 @@ const Login = () => {
           action: isLogin ? 'login' : 'register',
           email: formData.email,
           password: formData.password,
-          full_name: formData.full_name
+          full_name: formData.full_name,
+          phone: formData.phone
         })
       });
 
@@ -77,16 +80,28 @@ const Login = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             {!isLogin && (
-              <div className="space-y-2">
-                <Label htmlFor="full_name">Полное имя</Label>
-                <Input
-                  id="full_name"
-                  placeholder="Иван Иванов"
-                  value={formData.full_name}
-                  onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                  required={!isLogin}
-                />
-              </div>
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="full_name">Полное имя</Label>
+                  <Input
+                    id="full_name"
+                    placeholder="Иван Иванов"
+                    value={formData.full_name}
+                    onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                    required={!isLogin}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Телефон (необязательно)</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="+7 (999) 123-45-67"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  />
+                </div>
+              </>
             )}
             
             <div className="space-y-2">
@@ -126,7 +141,30 @@ const Login = () => {
               </div>
             )}
 
-            <Button type="submit" className="w-full" disabled={loading}>
+            {!isLogin && (
+              <div className="flex items-start space-x-2">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  className="mt-1"
+                  required={!isLogin}
+                />
+                <Label htmlFor="terms" className="text-sm text-muted-foreground cursor-pointer">
+                  Я согласен с{' '}
+                  <a href="/privacy" target="_blank" className="text-primary hover:underline">
+                    политикой конфиденциальности
+                  </a>
+                  {' '}и{' '}
+                  <a href="/terms" target="_blank" className="text-primary hover:underline">
+                    условиями использования
+                  </a>
+                </Label>
+              </div>
+            )}
+
+            <Button type="submit" className="w-full" disabled={loading || (!isLogin && !agreedToTerms)}>
               {loading ? (
                 <div className="flex items-center gap-2">
                   <Icon name="Loader2" size={16} className="animate-spin" />
@@ -143,7 +181,8 @@ const Login = () => {
                 variant="link"
                 onClick={() => {
                   setIsLogin(!isLogin);
-                  setFormData({ email: '', password: '', full_name: '' });
+                  setFormData({ email: '', password: '', full_name: '', phone: '' });
+                  setAgreedToTerms(false);
                 }}
               >
                 {isLogin ? 'Нет аккаунта? Зарегистрируйтесь' : 'Есть аккаунт? Войдите'}

@@ -48,6 +48,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     email = body_data.get('email')
     password = body_data.get('password')
     full_name = body_data.get('full_name', '')
+    phone = body_data.get('phone', '')
     
     if not email or not password:
         return {
@@ -74,8 +75,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
             
             cur.execute(
-                'INSERT INTO t_p99209851_math_resources_site.users (email, password_hash, full_name) VALUES (%s, %s, %s) RETURNING id',
-                (email, password_hash, full_name)
+                'INSERT INTO t_p99209851_math_resources_site.users (email, password_hash, full_name, phone) VALUES (%s, %s, %s, %s) RETURNING id',
+                (email, password_hash, full_name, phone)
             )
             user_id = cur.fetchone()[0]
             conn.commit()
