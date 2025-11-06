@@ -34,11 +34,23 @@ const MyPurchases = () => {
 
   const loadPurchases = async () => {
     try {
+      const cached = sessionStorage.getItem(`purchases_${userEmail}`);
+      const cacheTime = sessionStorage.getItem(`purchases_time_${userEmail}`);
+      
+      // Кешируем покупки на 2 минуты
+      if (cached && cacheTime && Date.now() - parseInt(cacheTime) < 120000) {
+        setPurchases(JSON.parse(cached));
+        setLoading(false);
+        return;
+      }
+
       const response = await fetch(`https://functions.poehali.dev/3a1ed603-9a84-4270-a759-a900fcc8d5b3?email=${encodeURIComponent(userEmail || '')}`);
       const data = await response.json();
       
       if (response.ok && data.purchases) {
         setPurchases(data.purchases);
+        sessionStorage.setItem(`purchases_${userEmail}`, JSON.stringify(data.purchases));
+        sessionStorage.setItem(`purchases_time_${userEmail}`, Date.now().toString());
       } else {
         setPurchases([]);
       }

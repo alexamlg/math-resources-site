@@ -78,33 +78,40 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
   const [lastOrderTime, setLastOrderTime] = useState<number>(0);
 
   useEffect(() => {
-    // Add Yandex verification meta tag
-    const meta = document.createElement('meta');
-    meta.name = 'yandex-verification';
-    meta.content = 'bc4ced2e8c5210d7';
-    document.head.appendChild(meta);
+    const initData = async () => {
+      // Add Yandex verification meta tag
+      const meta = document.createElement('meta');
+      meta.name = 'yandex-verification';
+      meta.content = 'bc4ced2e8c5210d7';
+      document.head.appendChild(meta);
 
-    loadProducts();
-    loadStats();
-    
-    // Загружаем корзину из localStorage при загрузке страницы
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      try {
-        const cartItems = JSON.parse(savedCart);
-        setCart(cartItems);
-      } catch (error) {
-        console.error('Ошибка загрузки корзины:', error);
+      // Загружаем корзину из localStorage при загрузке страницы
+      const savedCart = localStorage.getItem('cart');
+      if (savedCart) {
+        try {
+          const cartItems = JSON.parse(savedCart);
+          setCart(cartItems);
+        } catch (error) {
+          console.error('Ошибка загрузки корзины:', error);
+        }
       }
-    }
-    
-    const token = localStorage.getItem('user_token');
-    const email = localStorage.getItem('user_email');
-    if (token && email) {
-      setIsLoggedIn(true);
-      setCurrentUserEmail(email);
-      loadPurchasedProducts(email);
-    }
+      
+      const token = localStorage.getItem('user_token');
+      const email = localStorage.getItem('user_email');
+      if (token && email) {
+        setIsLoggedIn(true);
+        setCurrentUserEmail(email);
+      }
+
+      // Загружаем продукты и статистику параллельно
+      await Promise.all([
+        loadProducts(),
+        loadStats(),
+        token && email ? loadPurchasedProducts(email) : Promise.resolve()
+      ]);
+    };
+
+    initData();
 
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 400);
@@ -159,9 +166,21 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
 
   const loadStats = async () => {
     try {
+      const cached = sessionStorage.getItem('stats');
+      const cacheTime = sessionStorage.getItem('stats_time');
+      
+      // Кешируем статистику на 5 минут
+      if (cached && cacheTime && Date.now() - parseInt(cacheTime) < 300000) {
+        setStats(JSON.parse(cached));
+        return;
+      }
+
       const response = await fetch(`${API_URL}?stats=true`);
       const data = await response.json();
       setStats(data);
+      
+      sessionStorage.setItem('stats', JSON.stringify(data));
+      sessionStorage.setItem('stats_time', Date.now().toString());
     } catch (error) {
       console.error('Ошибка загрузки статистики');
     }

@@ -127,8 +127,7 @@ const Admin = () => {
         toast.success(editingProduct ? 'Товар обновлён' : 'Товар добавлен');
         setIsDialogOpen(false);
         resetForm();
-        await loadProducts();
-        await loadStats();
+        await Promise.all([loadProducts(), loadStats()]);
       } else {
         console.error('Ошибка сохранения, ответ:', responseData);
         toast.error('Ошибка сохранения');
@@ -155,8 +154,7 @@ const Admin = () => {
         body: JSON.stringify({ id })
       });
       toast.success('Товар удалён');
-      loadProducts();
-      loadStats();
+      await Promise.all([loadProducts(), loadStats()]);
     } catch (error) {
       toast.error('Ошибка удаления');
     }
