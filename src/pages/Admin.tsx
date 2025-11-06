@@ -107,6 +107,8 @@ const Admin = () => {
         ...(editingProduct && { id: editingProduct.id })
       };
 
+      console.log('Отправка данных:', payload);
+
       const response = await fetch(API_URL, {
         method: editingProduct ? 'PUT' : 'POST',
         headers: { 
@@ -115,6 +117,10 @@ const Admin = () => {
         body: JSON.stringify(payload)
       });
 
+      console.log('Статус ответа:', response.status);
+      const responseData = await response.json();
+      console.log('Ответ сервера:', responseData);
+
       if (response.ok) {
         toast.success(editingProduct ? 'Товар обновлён' : 'Товар добавлен');
         setIsDialogOpen(false);
@@ -122,9 +128,11 @@ const Admin = () => {
         await loadProducts();
         await loadStats();
       } else {
+        console.error('Ошибка сохранения, ответ:', responseData);
         toast.error('Ошибка сохранения');
       }
     } catch (error) {
+      console.error('Исключение при сохранении:', error);
       toast.error('Ошибка сохранения');
     } finally {
       setLoading(false);
