@@ -166,11 +166,11 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
 
   const loadStats = async () => {
     try {
-      const cached = sessionStorage.getItem('stats');
-      const cacheTime = sessionStorage.getItem('stats_time');
+      const cached = localStorage.getItem('stats');
+      const cacheTime = localStorage.getItem('stats_time');
       
-      // Кешируем статистику на 5 минут
-      if (cached && cacheTime && Date.now() - parseInt(cacheTime) < 300000) {
+      // Кешируем статистику на 24 часа (86400000 миллисекунд)
+      if (cached && cacheTime && Date.now() - parseInt(cacheTime) < 86400000) {
         setStats(JSON.parse(cached));
         return;
       }
@@ -179,8 +179,8 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
       const data = await response.json();
       setStats(data);
       
-      sessionStorage.setItem('stats', JSON.stringify(data));
-      sessionStorage.setItem('stats_time', Date.now().toString());
+      localStorage.setItem('stats', JSON.stringify(data));
+      localStorage.setItem('stats_time', Date.now().toString());
     } catch (error) {
       console.error('Ошибка загрузки статистики');
     }
