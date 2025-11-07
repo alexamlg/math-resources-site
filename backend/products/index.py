@@ -7,9 +7,14 @@ import json
 import os
 import psycopg2
 import jwt
+import time
 from typing import Dict, Any, Optional
 
 ADMIN_SECRET_KEY = os.environ.get('ADMIN_JWT_SECRET', 'admin-secret-key-change-in-production')
+
+# Глобальный кеш статистики (живет между вызовами функции)
+STATS_CACHE = {'data': None, 'timestamp': 0}
+CACHE_TTL = 86400  # 24 часа в секундах
 
 def verify_admin_token(headers: Dict[str, str]) -> Optional[Dict[str, Any]]:
     """Проверяет JWT токен админа из заголовка X-Admin-Token"""
@@ -70,6 +75,19 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             stats_request = query_params.get('stats') if query_params else None
             
             if stats_request == 'true':
+                # Проверяем кеш
+                current_time = time.time()
+                if STATS_CACHE['data'] and (current_time - STATS_CACHE['timestamp']) < CACHE_TTL:
+                    # Возвращаем кешированные данные
+                    conn.close()
+                    return {
+                        'statusCode': 200,
+                        'headers': headers_response,
+                        'body': json.dumps(STATS_CACHE['data']),
+                        'isBase64Encoded': False
+                    }
+                
+                # Если кеш устарел - запрашиваем из БД
                 cur.execute('''
                     SELECT 
                         COUNT(*) as total_products,
@@ -86,6 +104,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                     'total_products': stats_row[0] or 0,
                     'total_files': int(stats_row[1] or 0)
                 }
+                
+                # Обновляем кеш
+                STATS_CACHE['data'] = stats
+                STATS_CACHE['timestamp'] = current_time
+                
                 return {
                     'statusCode': 200,
                     'headers': headers_response,
