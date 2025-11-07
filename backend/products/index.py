@@ -75,19 +75,29 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             stats_request = query_params.get('stats') if query_params else None
             
             if stats_request == 'true':
-                # Проверяем кеш
-                current_time = time.time()
-                if STATS_CACHE['data'] and (current_time - STATS_CACHE['timestamp']) < CACHE_TTL:
-                    # Возвращаем кешированные данные
+                # Проверяем кеш в БД (один быстрый запрос вместо тяжелого подсчета)
+                cur.execute('''
+                    SELECT total_products, total_files, 
+                           EXTRACT(EPOCH FROM (CURRENT_TIMESTAMP - updated_at)) as age_seconds
+                    FROM stats_cache WHERE id = 1
+                ''')
+                cache_row = cur.fetchone()
+                
+                # Если кеш свежий (младше 24 часов) - возвращаем его
+                if cache_row and cache_row[2] < CACHE_TTL:
+                    stats = {
+                        'total_products': cache_row[0],
+                        'total_files': cache_row[1]
+                    }
                     conn.close()
                     return {
                         'statusCode': 200,
                         'headers': headers_response,
-                        'body': json.dumps(STATS_CACHE['data']),
+                        'body': json.dumps(stats),
                         'isBase64Encoded': False
                     }
                 
-                # Если кеш устарел - запрашиваем из БД
+                # Кеш устарел - пересчитываем статистику
                 cur.execute('''
                     SELECT 
                         COUNT(*) as total_products,
@@ -105,9 +115,13 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                     'total_files': int(stats_row[1] or 0)
                 }
                 
-                # Обновляем кеш
-                STATS_CACHE['data'] = stats
-                STATS_CACHE['timestamp'] = current_time
+                # Обновляем кеш в БД
+                cur.execute('''
+                    UPDATE stats_cache 
+                    SET total_products = %s, total_files = %s, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = 1
+                ''', (stats['total_products'], stats['total_files']))
+                conn.commit()
                 
                 return {
                     'statusCode': 200,
