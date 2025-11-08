@@ -166,22 +166,9 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
 
   const loadStats = async () => {
     try {
-      const cached = localStorage.getItem('stats');
-      const cacheTime = localStorage.getItem('stats_time');
-      
-      // Кешируем статистику на 24 часа (86400000 миллисекунд)
-      if (cached && cacheTime && Date.now() - parseInt(cacheTime) < 86400000) {
-        setStats(JSON.parse(cached));
-        return;
-      }
-
       const response = await fetch(`${API_URL}?stats=true`);
       const data = await response.json();
-      console.log('Loaded fresh stats from API:', data);
       setStats(data);
-      
-      localStorage.setItem('stats', JSON.stringify(data));
-      localStorage.setItem('stats_time', Date.now().toString());
     } catch (error) {
       console.error('Ошибка загрузки статистики', error);
     }
