@@ -177,12 +177,13 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
 
       const response = await fetch(`${API_URL}?stats=true`);
       const data = await response.json();
+      console.log('Loaded fresh stats from API:', data);
       setStats(data);
       
       localStorage.setItem('stats', JSON.stringify(data));
       localStorage.setItem('stats_time', Date.now().toString());
     } catch (error) {
-      console.error('Ошибка загрузки статистики');
+      console.error('Ошибка загрузки статистики', error);
     }
   };
 
