@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import Icon from '@/components/ui/icon';
 import SEO from '@/components/SEO';
 
-const API_URL = 'https://functions.poehali.dev/4350c782-6bfa-4c53-b148-e1f621446eaa/user-auth';
+const API_URL = 'https://functions.poehali.dev/952cea32-e71e-48d7-8465-264417100e39';
 
 const Login = () => {
   const navigate = useNavigate();
