@@ -227,6 +227,9 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 (title, description, price, category, product_type, sample_pdf_url, full_pdf_with_answers_url, full_pdf_without_answers_url, trainer1_url, trainer2_url, trainer3_url, is_free, preview_image_url, is_new, is_popular)
             )
             new_id = cur.fetchone()[0]
+            
+            # Сбрасываем кеш статистики после добавления товара
+            cur.execute('UPDATE stats_cache SET updated_at = CURRENT_TIMESTAMP - INTERVAL \'25 hours\' WHERE id = 1')
             conn.commit()
             
             return {
@@ -266,6 +269,9 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 """,
                 (title, description, price, category, product_type, sample_pdf_url, full_pdf_with_answers_url, full_pdf_without_answers_url, trainer1_url, trainer2_url, trainer3_url, is_free, preview_image_url, is_new, is_popular, product_id)
             )
+            
+            # Сбрасываем кеш статистики после обновления товара
+            cur.execute('UPDATE stats_cache SET updated_at = CURRENT_TIMESTAMP - INTERVAL \'25 hours\' WHERE id = 1')
             conn.commit()
             
             return {
@@ -280,6 +286,9 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             product_id = int(body_data.get('id'))
             
             cur.execute("DELETE FROM products WHERE id = %s", (product_id,))
+            
+            # Сбрасываем кеш статистики после удаления товара
+            cur.execute('UPDATE stats_cache SET updated_at = CURRENT_TIMESTAMP - INTERVAL \'25 hours\' WHERE id = 1')
             conn.commit()
             
             return {
