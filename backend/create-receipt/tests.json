@@ -1,0 +1,38 @@
+{
+  "tests": [
+    {
+      "name": "Create receipt successfully",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "amount": 100,
+        "customer_email": "test@example.com",
+        "services": [
+          {
+            "name": "Тестовый товар",
+            "price": 100,
+            "quantity": 1
+          }
+        ]
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "status": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Missing required fields",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "amount": 100
+      },
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
