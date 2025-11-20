@@ -447,6 +447,7 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
               alt="Математическая кухня" 
               className="h-12 w-auto"
             />
+            <h1 className="text-lg sm:text-2xl font-bold text-foreground">Математическая кухня</h1>
           </div>
 
           <div className="flex items-center gap-2">
