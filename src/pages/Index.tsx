@@ -442,8 +442,11 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
       <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
         <div className="container flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2">
-            <Icon name="GraduationCap" size={28} className="text-primary" />
-            <h1 className="text-lg sm:text-2xl font-bold text-foreground">Математическая кухня</h1>
+            <img 
+              src="https://cdn.poehali.dev/files/4affc2d1-d01b-436e-bd3e-c58205b2ce36.png" 
+              alt="Математическая кухня" 
+              className="h-12 w-auto"
+            />
           </div>
 
           <div className="flex items-center gap-2">
