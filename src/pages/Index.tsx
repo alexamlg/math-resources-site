@@ -594,10 +594,21 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
 
       <main className="container py-8">
         <section className="mb-12 text-center">
-          <h2 className="text-4xl font-bold mb-4">Учебные материалы по математике</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
-            Методички, рабочие листы и тренажёры для 5–11 классов, подготовка к ОГЭ и ЕГЭ
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Математическая кухня — Тренажёры по математике для ОГЭ и ЕГЭ</h1>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-6">
+            Готовьтесь к экзаменам с профессиональными материалами: варианты по математике ОГЭ и ЕГЭ, математические тренажёры для 5–11 классов, методички и рабочие листы. Эффективная подготовка к ОГЭ по математике и ЕГЭ по математике онлайн.
           </p>
+          <div className="text-base text-muted-foreground space-y-3 text-left max-w-3xl mx-auto mb-6">
+            <p>
+              <strong>Варианты ОГЭ по математике 2025</strong> — актуальные задания по новому формату ФИПИ. Решайте пробные варианты ОГЭ математика с ответами и подробными решениями.
+            </p>
+            <p>
+              <strong>Варианты ЕГЭ по математике</strong> — профильный и базовый уровень. Тренировочные варианты ЕГЭ математика 2025 для комплексной подготовки к экзаменам.
+            </p>
+            <p>
+              <strong>Математические тренажёры 5-11 класс</strong> — интерактивные задания по алгебре и геометрии для отработки навыков. Тренажёр по математике онлайн с автоматической проверкой.
+            </p>
+          </div>
           {stats && (
             <div className="flex items-center justify-center gap-8 mt-6">
               <div className="flex items-center gap-3 px-6 py-3 bg-primary/10 rounded-xl border border-primary/20">

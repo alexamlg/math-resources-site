@@ -134,9 +134,9 @@ const Product = () => {
   return (
     <>
       <SEO
-        title={product.title}
-        description={product.description}
-        keywords={`${product.category}, ${product.type}, математика, образование`}
+        title={`${product.title} — ${product.category} ${product.type} | Математическая кухня`}
+        description={`${product.description} Купить ${product.type.toLowerCase()} по математике для ${product.category}. ${product.category === 'ОГЭ' ? 'Подготовка к ОГЭ по математике с ответами и решениями.' : product.category === 'ЕГЭ' ? 'Подготовка к ЕГЭ математика профильный уровень.' : 'Математические материалы для школьников.'}`}
+        keywords={`${product.title}, ${product.category}, ${product.type}, математика ${product.category.toLowerCase()}, ${product.category === 'ОГЭ' ? 'варианты огэ по математике, огэ математика' : product.category === 'ЕГЭ' ? 'варианты егэ по математике, егэ математика' : 'математические тренажеры'}`}
         image={getProductImageUrl()}
       />
       
