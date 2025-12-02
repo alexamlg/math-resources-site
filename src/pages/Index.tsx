@@ -594,7 +594,7 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
 
       <main className="container py-8">
         <section className="mb-12 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Математическая кухня | Тренажеры по математике</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Тренажеры и рабочие листы по математике</h1>
           {stats && (
             <div className="flex items-center justify-center gap-8 mt-6">
               <div className="flex items-center gap-3 px-6 py-3 bg-primary/10 rounded-xl border border-primary/20">
