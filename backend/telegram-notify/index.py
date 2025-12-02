@@ -36,19 +36,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             'isBase64Encoded': False
         }
     
-    bot_token = os.environ.get('TELEGRAM_BOT_TOKEN')
-    chat_id = os.environ.get('TELEGRAM_CHAT_ID')
-    
-    if not bot_token or not chat_id:
-        return {
-            'statusCode': 500,
-            'headers': {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            'body': json.dumps({'error': 'Telegram credentials not configured'}),
-            'isBase64Encoded': False
-        }
+    bot_token = '8259130107:AAFkKp8ceMRjUkQs-A77JYaXeLNRE_vpdWY'
+    chat_id = '927682281'
     
     body_data = json.loads(event.get('body', '{}'))
     amount = body_data.get('amount', '0')
