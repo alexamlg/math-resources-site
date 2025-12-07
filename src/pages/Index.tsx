@@ -855,7 +855,9 @@ const Index = ({ initialCategory = 'Все' }: IndexProps) => {
             <p>© 2024 Математическая кухня | Тренажёры по математике</p>
             <p>ИП Александрова Людмила Геннадьевна</p>
             <p>ИНН: 820100655703</p>
-            <div className="flex justify-center gap-4 mt-2">
+            <div className="flex justify-center gap-4 mt-2 flex-wrap">
+              <a href="/offer" className="text-primary hover:underline">Публичная оферта</a>
+              <span>•</span>
               <a href="/privacy" className="text-primary hover:underline">Политика конфиденциальности</a>
               <span>•</span>
               <a href="/terms" className="text-primary hover:underline">Пользовательское соглашение</a>
