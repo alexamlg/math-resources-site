@@ -196,12 +196,16 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     except Exception:
         pass
     
+    print(f'[WEBHOOK] Product titles for Telegram: {product_titles}')
+    
     if product_titles:
         telegram_payload = json.dumps({
             'amount': str(int(amount)),
             'email': customer_email,
             'products': product_titles
         }).encode()
+        
+        print(f'[WEBHOOK] Sending Telegram notification: {telegram_payload.decode()}')
         
         telegram_req = urllib.request.Request(
             'https://functions.poehali.dev/ce167a18-88d6-47c0-bb99-ee0343589867',
@@ -210,9 +214,13 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         )
         
         try:
-            urllib.request.urlopen(telegram_req)
+            telegram_response = urllib.request.urlopen(telegram_req)
+            telegram_result = telegram_response.read().decode()
+            print(f'[WEBHOOK] Telegram notification sent successfully: {telegram_result}')
         except Exception as e:
             print(f'[WEBHOOK] Telegram notification error: {str(e)}')
+    else:
+        print(f'[WEBHOOK] WARNING: No product titles found, Telegram notification NOT sent!')
     
     return {
         'statusCode': 200,
