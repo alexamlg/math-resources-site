@@ -1,12 +1,9 @@
 {
   "sitemap-generator": "https://functions.poehali.dev/da81be31-17c4-4852-be23-1f01d0194af0",
-  "test-telegram": "https://functions.poehali.dev/afe4128e-84ea-4dbb-98e5-34e96ff8ac23",
   "create-receipt": "https://functions.poehali.dev/d1dc781b-749f-4474-ba46-66d58d83f503",
   "admin-auth": "https://functions.poehali.dev/19bf4793-d457-445e-9840-1849efe694c7",
   "admin-users": "https://functions.poehali.dev/cba7f384-00f8-4a87-89b6-9f94a75af6d5",
-  "sitemap": "https://functions.poehali.dev/f183b00f-e951-4402-9f28-b6f3364dfe06",
   "telegram-notify": "https://functions.poehali.dev/ce167a18-88d6-47c0-bb99-ee0343589867",
-  "upload-image": "https://functions.poehali.dev/656fba02-bcb4-4232-a86f-427649503545",
   "orders-history": "https://functions.poehali.dev/e69706f3-b187-4b9b-804d-1bbad6464463",
   "create-payment": "https://functions.poehali.dev/05fb0013-0d79-4a67-a86f-a215f7c89e1c",
   "password-reset": "https://functions.poehali.dev/92d2b35e-cf32-49d8-abac-c8312f15c71c",
@@ -16,7 +13,5 @@
   "my-purchases": "https://functions.poehali.dev/3a1ed603-9a84-4270-a759-a900fcc8d5b3",
   "yookassa-webhook": "https://functions.poehali.dev/12ec2917-d90f-4d0c-9e80-1b0bdcf79273",
   "user-auth": "https://functions.poehali.dev/952cea32-e71e-48d7-8465-264417100e39",
-  "payment": "https://functions.poehali.dev/c3183bd5-f862-4c83-bf32-b86987ab972c",
-  "upload": "https://functions.poehali.dev/cc6c5ccf-7c44-4ff3-94d3-67a08ba0b9a9",
   "products": "https://functions.poehali.dev/4350c782-6bfa-4c53-b148-e1f621446eaa"
 }
