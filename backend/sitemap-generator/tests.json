@@ -1,0 +1,13 @@
+{
+  "tests": [
+    {
+      "name": "Generate sitemap with images",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedHeaders": {
+        "Content-Type": "application/xml; charset=utf-8"
+      }
+    }
+  ]
+}

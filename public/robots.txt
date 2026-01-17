@@ -28,4 +28,4 @@ Disallow: /admin
 Disallow: /admin-deliver
 Disallow: /login
 
-Sitemap: https://p99209851.poehali.app/sitemap.xml
+Sitemap: https://functions.poehali.dev/da81be31-17c4-4852-be23-1f01d0194af0
