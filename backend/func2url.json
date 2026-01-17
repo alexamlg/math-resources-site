@@ -1,6 +1,5 @@
 {
   "sitemap-generator": "https://functions.poehali.dev/da81be31-17c4-4852-be23-1f01d0194af0",
-  "create-receipt": "https://functions.poehali.dev/d1dc781b-749f-4474-ba46-66d58d83f503",
   "admin-auth": "https://functions.poehali.dev/19bf4793-d457-445e-9840-1849efe694c7",
   "admin-users": "https://functions.poehali.dev/cba7f384-00f8-4a87-89b6-9f94a75af6d5",
   "telegram-notify": "https://functions.poehali.dev/ce167a18-88d6-47c0-bb99-ee0343589867",
@@ -8,7 +7,6 @@
   "create-payment": "https://functions.poehali.dev/05fb0013-0d79-4a67-a86f-a215f7c89e1c",
   "password-reset": "https://functions.poehali.dev/92d2b35e-cf32-49d8-abac-c8312f15c71c",
   "manual-deliver": "https://functions.poehali.dev/4cad51da-a7d3-49bf-a277-98b51b37e58c",
-  "manual-send-purchase": "https://functions.poehali.dev/35411a0f-0ed2-4d0a-978c-5eaa1970d039",
   "send-purchase-email": "https://functions.poehali.dev/fa6783b1-aae1-4057-8f19-8f9ccb0665f1",
   "my-purchases": "https://functions.poehali.dev/3a1ed603-9a84-4270-a759-a900fcc8d5b3",
   "yookassa-webhook": "https://functions.poehali.dev/12ec2917-d90f-4d0c-9e80-1b0bdcf79273",
